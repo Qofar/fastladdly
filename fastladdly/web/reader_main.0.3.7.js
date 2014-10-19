@@ -719,6 +719,7 @@ Config.save = function(){
 				tmp[key] = value;
 		// }
 	});
+	tmp = typecast_config(tmp);
 	var data = Object.toJSON(tmp);
 	localStorage.setItem("Config",data);
 };
@@ -739,7 +740,6 @@ Config.loadform = function(form){
 Config.saveform = function(form){
 	var form = $(form);
 	var data = Form.toJson(form);
-	data = typecast_config(data);
 	each(data, function(value,key){
 		Config[key]=value;
 	});
@@ -3553,7 +3553,7 @@ function get_first(id,callback){
 		set_focus(id);
 		return;
 	} else {
-		var api = new API("/api/all");
+		// var api = new API("/api/all");
 		var api_url = feedly.BASE+"/streams/contents?streamId=" + encodeURIComponent(id) + "&count=1&unreadOnly=false&ranked=newest";
 		var api = new API(api_url);
 		set_focus(id)
