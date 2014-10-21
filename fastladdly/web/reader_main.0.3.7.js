@@ -1230,8 +1230,17 @@ Pinsaver.extend({
 		api.delete();
 	},
 	clear: function(){
-		var api = new API("/api/pin/clear");
-		api.post({});
+		// var api = new API("/api/pin/clear");
+		var url = feedly.BASE+"/streams/contents?streamId=" + encodeURIComponent("user/"+feedly.id+"/tag/global.saved") + "&count=1000&unreadOnly=true&ranked=oldest";
+		var api = new API(url);
+		api.get({}, function(pins){
+			var items = pins.items;
+			for(var i = 0, length = items.length; i < length; i++){
+				var id = items[i].id;
+				var api = new API(feedly.BASE+"/tags/" + encodeURIComponent("user/"+feedly.id+"/tag/global.saved") + "/" + encodeURIComponent(id));
+				api.delete();
+			}
+		});
 	}
 })
 Pin = Class.merge(Pin, Pinsaver);
