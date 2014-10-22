@@ -1,4 +1,4 @@
 (function() {
-    feedly.getProfile();
     feedly.getSubscriptions();
+    feedly.getProfile();
 })();
