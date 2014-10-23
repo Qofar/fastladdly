@@ -9,7 +9,7 @@ var feedly = {
 	access_token : localStorage.getItem("access_token"),
 	refresh_token : localStorage.getItem("refresh_token"),
 	token_type : localStorage.getItem("token_type"),
-	id : localStorage.getItem("id"),
+	id : localStorage.getItem("feedly_id"),
 	plan : localStorage.getItem("plan"),
 
 	lastUpdated : 0,
