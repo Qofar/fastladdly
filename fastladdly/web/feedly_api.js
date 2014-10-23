@@ -65,7 +65,7 @@ var feedly = {
 		localStorage.setItem("access_token", json.access_token);
 		localStorage.setItem("refresh_token", json.refresh_token);
 		localStorage.setItem("token_type", json.token_type);
-		localStorage.setItem("id", json.id);
+		localStorage.setItem("feedly_id", json.id);
 		localStorage.setItem("plan", json.plan);
 
 		access_token = json.access_token;
