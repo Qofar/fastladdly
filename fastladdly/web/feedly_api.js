@@ -234,7 +234,7 @@ var feedly = {
 		}
 
 		// 既読処理用feedid
-		if (length < 0) sub["tochid"] = json.items[0].id;
+		if (length !== 0) sub["tochid"] = json.items[0].id;
 
 		tmp["items"] = items;
 		return tmp;
