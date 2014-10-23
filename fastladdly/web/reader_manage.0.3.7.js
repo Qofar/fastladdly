@@ -173,20 +173,29 @@ Manage.Item = {
 		var self = this;
 		this.data = new Subscribe.Model;
 		// new API("/api/subs?unread=0").post({},
-		feedly.getSubscriptions();
-		var api = new API(feedly.BASE+"/markers/counts");
-		api.get({}, function(list){
-			list = feedly.unreadCount2fastladder(list, true);
-			self.loaded = true;
-			self.data.load(list);
-			if(self.sort_mode){
-				self.do_sort()
+		var api = new API(feedly.BASE+"/subscriptions");
+		api.get({},function(json){
+			var json = feedly.subscriptions2fastladder(json);
+			var tmp = {};
+			for (var i = 0, length = json.length; i < length; i++) {
+				tmp[json[i].subscribe_id] = json[i];
 			}
-			if(self.filter){
-				self.reload_filter()
-			} else {
-				self.update()
-			}
+			feedly.subs = tmp;
+
+			var api = new API(feedly.BASE+"/markers/counts");
+			api.get({}, function(list){
+				list = feedly.unreadCount2fastladder(list, true);
+				self.loaded = true;
+				self.data.load(list);
+				if(self.sort_mode){
+					self.do_sort()
+				}
+				if(self.filter){
+					self.reload_filter()
+				} else {
+					self.update()
+				}
+			});
 		});
 	},
 	search: function(){

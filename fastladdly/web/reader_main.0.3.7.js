@@ -3455,7 +3455,24 @@ function init(){
 		invoke_hook('BEFORE_CONFIGLOAD');
 		Config.load(function(){
 			invoke_hook('AFTER_CONFIGLOAD');
-			subs.update();
+
+			feedly.getProfile();
+			// var api = new API(feedly.BASE+"/profile");
+			// api.get({},function(json){
+			// 	var span = document.getElementById("welcome");
+			// 	span.textContent = json.email;
+			// });
+			var api = new API(feedly.BASE+"/subscriptions");
+			api.get({},function(json){
+				var json = feedly.subscriptions2fastladder(json);
+				var tmp = {};
+				for (var i = 0, length = json.length; i < length; i++) {
+					tmp[json[i].subscribe_id] = json[i];
+				}
+				feedly.subs = tmp;
+
+				subs.update();
+			});
 		});
 	}).later(10)();
 	invoke_hook('AFTER_INIT');

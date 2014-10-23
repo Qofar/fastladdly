@@ -105,24 +105,6 @@ var feedly = {
 		};
 		xhr.send();
 	},
-	getSubscriptions: function() {
-		var url = feedly.BASE+"/subscriptions";
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", url, true);
-		xhr.setRequestHeader(
-			"Authorization", "OAuth " + feedly.access_token
-		);
-		xhr.onload = function() {
-			var json = JSON.parse(this.response);
-			var subs = feedly.subscriptions2fastladder(json);
-			var tmp = {};
-			for (var i = 0, length = subs.length; i < length; i++) {
-				tmp[subs[i].subscribe_id] = subs[i];
-			}
-			feedly.subs = tmp;
-		};
-		xhr.send();
-	},
 	subscriptions2fastladder: function(json) {
 		var localRate = localStorage.getItem("Rate");
 		if (!localRate) localRate = "{}";
