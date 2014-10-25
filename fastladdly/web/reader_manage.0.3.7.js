@@ -14,6 +14,7 @@ updater("manage_item", function(){
 		item = subs_item(sid);
 		var classname = TRSelector.cart.has(sid) ? "selected" : "";
 		return tmpl(item, {
+			link: item.link,
 			url : item.feedlink,
 			update : ((now - item.modified_on)/1000).toRelativeDate(),
 			notify_text: item.ignore_notify ? "無効" : "有効",
