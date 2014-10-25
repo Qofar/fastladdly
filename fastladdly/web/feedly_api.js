@@ -106,14 +106,24 @@ var feedly = {
 		xhr.send();
 	},
 	subscriptions2fastladder: function(json) {
-		var localRate = localStorage.getItem("Rate");
-		if (!localRate) localRate = "{}";
-		var rate = JSON.parse(localRate);
 		var tmp = [];
 		for (var i = 0, length = json.length; i < length; i++) {
 			var item = json[i];
 			var id = item.id.replace(/&amp;/ig,"&"); // feedlyは&amp;を&で格納している？
 			var link = item.website || "";
+
+			// categories -> rate
+			var rate = 0;
+			var categories = [];
+			for (var c = 0, lenCate = item.categories.length; c < lenCate; c++) {
+				var ratelabel = feedly.label2rate(item.categories[c].label);
+				if (ratelabel === null) {
+					categories.push(item.categories[c]);
+				} else {
+					rate = ratelabel;
+				}
+			}
+
 			var sub = {
 				// icon: "http://www.google.com/s2/favicons?domain=" + link.split("/").slice(2, 3) + "&alt=feed",
 				icon: "http://www.google.com/s2/favicons?domain_url=" + link + "&alt=feed",
@@ -121,10 +131,11 @@ var feedly = {
 				link: link,
 				subscribe_id: id,
 				unread_count: 0,
-				folder: item.categories.length===0 ? "" : item.categories[0].label,
-				folder_id: item.categories.length===0 ? "" : item.categories[0].id,
+				folder: categories.length===0 ? "" : categories[0].label,
+				folder_id: categories.length===0 ? "" : categories[0].id,
+				categories: categories,
 				tags: [],
-				rate: rate[id] ? rate[id] : 0,
+				rate: rate,
 				modified_on: item.updated,
 				public: 0,
 				title: item.title,
@@ -152,15 +163,18 @@ var feedly = {
 		return pins;
 	},
 	unreadCount2fastladder: function(json, isAll) {
-		feedly.lastUpdated = json.updated;   // 最終未読確認時刻
-		var tmp = json.unreadcounts;
+		var items = json.unreadcounts;
 		var subs = [];
-		for (var i in tmp) {
-			var sub = feedly.subs[tmp[i].id];
+		for (var i = 0, length = items.length; i < length; i++) {
+			if (items[i].id.indexOf("/category/global.all") !== -1) {
+				// 最終未読確認時刻
+				feedly.lastUpdated = items[i].updated;
+			}
+			var sub = feedly.subs[items[i].id];
 			if (!sub) continue;
-			sub.modified_on = tmp[i].updated;
-			sub.unread_count = tmp[i].count;
-			if (isAll == false && tmp[i].count === 0) continue;
+			sub.modified_on = items[i].updated;
+			sub.unread_count = items[i].count;
+			if (isAll == false && items[i].count === 0) continue;
 
 			subs.push(sub);
 		}
@@ -194,6 +208,7 @@ var feedly = {
 			var summary = item.summary ? item.summary.content : null;
 			var body = content || summary || "";
 			var keywords = item.keywords ? item.keywords.join(", ") : "";
+			// visualはog:imageのURL？
 			var visual = item.visual;
 			if (visual && visual.url !== "none" && body.indexOf(visual.url) === -1) {
 				body += "<div><img src='" + visual.url + "'/></div>";
@@ -244,6 +259,7 @@ var feedly = {
 		var names = [];
 		for (var i = 0, length = json.length; i < length; i++) {
 			var category = json[i];
+			if (feedly.label2rate(category.label) !== null) continue;
 			name2id[category.label] = category.id;
 			id2name[category.id] = category.label;
 			names.push(category.label);
@@ -255,16 +271,40 @@ var feedly = {
 		tmp["names"] = names;
 		return tmp;
 	},
-	saveRate: function() {
-		var tmp = {};
-		for (var i in feedly.subs) {
-			if(feedly.subs[i].rate){
-				tmp[i] = feedly.subs[i].rate;
-			}
+	label2rate: function(label) {
+		switch(label) {
+			case "★★★★★":
+				return 5;
+			case "★★★★☆":
+				return 4;
+			case "★★★☆☆":
+				return 3;
+			case "★★☆☆☆":
+				return 2;
+			case "★☆☆☆☆":
+				return 1;
+			case "☆☆☆☆☆":
+				return 0;
+			default:
+				return null;
 		}
-		var data = Object.toJSON(tmp);
-		localStorage.setItem("Rate",data);
 	},
-
-
+	rate2label: function(rate) {
+		switch(rate) {
+			case 5:
+				return "★★★★★";
+			case 4:
+				return "★★★★☆";
+			case 3:
+				return "★★★☆☆";
+			case 2:
+				return "★★☆☆☆";
+			case 1:
+				return "★☆☆☆☆";
+			case 0:
+				return "★☆☆☆☆";
+			default:
+				return null;
+		}
+	},
 };

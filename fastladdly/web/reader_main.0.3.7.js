@@ -1059,8 +1059,26 @@ function set_rate(id,rate){
 	// 	subscribe_id : id,
 	// 	rate : rate
 	// });
-	feedly.subs[id].rate = rate;
-	feedly.saveRate();
+	var sub = subs_item(id);
+	var categories = sub.categories;
+	if(rate !== 0){
+		var ratelabel = feedly.rate2label(rate);
+		categories.push(
+			{
+				id: "user/" + feedly.id + "/category/" + ratelabel,
+				label: ratelabel
+			}
+		);
+	}
+	var api = new API(feedly.BASE+"/subscriptions");
+	api.post({
+		title: sub.title,
+		id: sub.subscribe_id,
+		categories: categories
+	}, function(){
+		sub.rate = rate;
+		message("set_rate_complete");
+	});
 }
 function create_folder(name){
 	if(!name){
@@ -2127,7 +2145,8 @@ var Control = {
 			type: "categories",
 			asOf: feedly.lastUpdated,
 			categoryIds: [
-				encodeURIComponent("user/"+feedly.id+"/category/global.all")
+				// encodeURIComponent("user/"+feedly.id+"/category/global.all")
+				"user/"+feedly.id+"/category/global.all"
 			]
 		}, function(){
 			message("Marked as read");
@@ -3650,20 +3669,30 @@ function get_unread(id,callback){
 get_unread.cache = new Cache({max:50});
 
 function move_to(sid,to,callback){
-	// var api = new API("/api/feed/move");
-	var api = new API(feedly.BASE+"/subscriptions");
-	var category = [];
-	if(to !== "") {
-		category.push(
+	var categories = [];
+	var rate = subs_item(sid).rate;
+	if(rate !== 0){
+		var ratelabel = feedly.rate2label(rate);
+		categories.push(
+			{
+				id: "user/" + feedly.id + "/category/" + ratelabel,
+				label: ratelabel
+			}
+		);
+	}
+	if(to !== ""){
+		categories.push(
 			{
 				id: "user/" + feedly.id + "/category/" + to,
 				label: to
 			}
 		);
 	}
+	// var api = new API("/api/feed/move");
+	var api = new API(feedly.BASE+"/subscriptions");
 	api.post({
 		id : sid,
-		categories : category
+		categories : categories
 	},callback)
 }
 
