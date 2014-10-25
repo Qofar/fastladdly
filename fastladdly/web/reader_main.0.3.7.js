@@ -4025,6 +4025,8 @@ function init_manage(){
 			update("manage_item");
 			update("manage_folder");
 		});
+		var findbox = document.getElementById("findbox");
+		findbox.onkeyup = function(){MI.search.call(this,event);};
 	});
 }
 
