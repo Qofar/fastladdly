@@ -81,6 +81,14 @@ var feedly = {
 			feedly.getToken();
 		}
 	},
+	signout: function() {
+		localStorage.removeItem("access_token");
+		localStorage.removeItem("refresh_token");
+		localStorage.removeItem("token_type");
+		localStorage.removeItem("feedly_id");
+		localStorage.removeItem("plan");
+		location.href = "init.html";
+	},
 	getProfile: function() {
 		if (document.getElementById("welcome").textContent !== "welcome") {
 			return;
