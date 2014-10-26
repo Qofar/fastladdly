@@ -216,11 +216,10 @@ var feedly = {
 			var summary = item.summary ? item.summary.content : null;
 			var body = content || summary || "";
 			var keywords = item.keywords ? item.keywords.join(", ") : "";
-			// visualはog:imageのURL？
-			var visual = item.visual;
-			if (visual && visual.url !== "none" && body.indexOf(visual.url) === -1) {
-				body += "<div><img src='" + visual.url + "'/></div>";
-			}
+			// var visual = item.visual;
+			// if (visual && visual.url !== "none" && body.indexOf(visual.url) === -1) {
+			// 	body += "<div><img src='" + visual.url + "'/></div>";
+			// }
 			var feed = {
 				enclosure: "",
 				link: alternateUrl || originUrl || "",
