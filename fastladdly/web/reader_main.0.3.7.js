@@ -1085,13 +1085,7 @@ function create_folder(name){
 		name = prompt("フォルダ名","");
 		if(!name) return;
 	}
-	var api = new API("/api/folder/create");
-	api.post({name:name},function(res){
-		message('create_folder_complete');
-		// clear cache
-		folder = null;
-		Control.move_to(name)
-	});
+	Control.move_to(name)
 	return name;
 }
 
