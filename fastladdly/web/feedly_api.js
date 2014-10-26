@@ -103,8 +103,14 @@ var feedly = {
 		xhr.onload = function() {
 			if (this.status === 200) {
 				var resp = JSON.parse(this.response);
+				var service = "";
+				if (resp.google) service = " via Google";
+				else if (resp.twitterUserId)  service = " via Twitter";
+				else if (resp.facebookUserId) service = " via Facebook";
+				else if (resp.wordPressId)    service = " via WordPress";
+				else if (resp.windowsLiveId)  service = " via WindowsLive";
 				var span = document.getElementById("welcome");
-				span.textContent = resp.email;
+				span.textContent = resp.email + service;
 			} else if(this.status === 401) {
 				localStorage.removeItem("access_token");
 				localStorage.removeItem("refresh_token");
