@@ -2599,8 +2599,17 @@ function feed_subscribe(feedlink,callback){
 		res.subscribe_id = sid;
 		message("Subscription completed");
 		callback(res);
-		feedly.getSubscriptions();
-		subs.update(true);
+		var api = new API(feedly.BASE+"/subscriptions");
+		api.get({},function(json){
+			var json = feedly.subscriptions2fastladder(json);
+			var tmp = {};
+			for (var i = 0, length = json.length; i < length; i++) {
+				tmp[json[i].subscribe_id] = json[i];
+			}
+			feedly.subs = tmp;
+
+			subs.update(true);
+		});
 	})
 }
 function feed_unsubscribe(sid, callback){
@@ -2610,8 +2619,17 @@ function feed_unsubscribe(sid, callback){
 	api.delete({},function(res){
 		message("feed deleted");
 		callback(res);
-		feedly.getSubscriptions();
-		subs.update(true);
+		var api = new API(feedly.BASE+"/subscriptions");
+		api.get({},function(json){
+			var json = feedly.subscriptions2fastladder(json);
+			var tmp = {};
+			for (var i = 0, length = json.length; i < length; i++) {
+				tmp[json[i].subscribe_id] = json[i];
+			}
+			feedly.subs = tmp;
+
+			subs.update(true);
+		});
 	});
 }
 
