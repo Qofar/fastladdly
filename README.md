@@ -12,3 +12,9 @@
 * fastladderのフォルダとレート管理を無理やりfeedly上でやっているので、feedlyのCollection機能でフォルダとレートの2つ以外に所属させることができない
 * Tampermonkey等のChromeExtensionは仕様上`chrome-extension://`に適用されないので動かない
 * 上記の仕様のためキーカスタマイズや挙動の変更、機能追加、widgets追加などは直接ソースコードを修正追加する必要がある
+
+
+### Thanks
+* [fastladder](https://github.com/fastladder/fastladder)
+* [livedoor Reader](http://reader.livedoor.com/reader/)
+* [FastladderのバックエンドをFeedlyにするフォークを作った](http://laiso.hatenablog.com/entry/2014/10/12/Fastladder%E3%81%AE%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89%E3%82%92Feedly%E3%81%AB%E3%81%99%E3%82%8B%E3%83%95%E3%82%A9%E3%83%BC%E3%82%AF%E3%82%92%E4%BD%9C%E3%81%A3%E3%81%9F)
