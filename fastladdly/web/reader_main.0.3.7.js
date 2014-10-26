@@ -3909,6 +3909,10 @@ function print_feed(feed){
 	);
 	fix_linktarget();
 
+	var folder_label = document.getElementById("folder_label");
+	folder_label.onselectstart = function(){return false;};
+	folder_label.onmousedown = function(){FolderToggle.click.call(this,event);};
+
 	State.writer && State.writer.cancel();
 	State.writer2 && State.writer2.cancel();
 	function DIV(text){
