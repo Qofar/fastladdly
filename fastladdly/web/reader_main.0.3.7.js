@@ -3532,7 +3532,7 @@ function print_discover(list){
 		});
 		output.innerHTML = uniq_list.map(function(item){
 			var users = item.subscribers_count > 1 ? "users" : "user";
-			if(item.subscribe_id){
+			if(feedly.subs[item.feedid]){
 				feedlink2id[item.feedlink] = item.subscribe_id;
 				return unsub(item,{users: users});
 			} else {
