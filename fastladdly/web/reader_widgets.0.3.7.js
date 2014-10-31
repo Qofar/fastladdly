@@ -18,17 +18,17 @@ function setup_widgets(){
 		return 'crawled: ' + new DateTime(item.crawled).toString();
 	});
 
-	entry_widgets.add('feedly_like', function(feed, item){
-		return item.engagement ? 'like: ' + item.engagement : "";
+	entry_widgets.add('feedly_share', function(feed, item){
+		return item.engagement ? 'share: ' + item.engagement : "";
 	});
 
-	// entry_widgets.add('subs_button', function(feed, item){
-	// 	var channel_domain = get_domain(feed.channel.link);
-	// 	var subs_button = function(url){
-	// 		return '<a href="' + url + '" rel="discover">add</a>';
-	// 	};
-	// 	return (channel_domain != get_domain(item.link)) ? subs_button(item.link) : "";
-	// });
+	entry_widgets.add('subs_button', function(feed, item){
+		var channel_domain = get_domain(feed.channel.link);
+		var subs_button = function(url){
+			return '<a href="' + url + '" rel="discover">add</a>';
+		};
+		return (channel_domain != get_domain(item.link)) ? subs_button(item.link) : "";
+	});
 
 	channel_widgets.add('offset', function(feed, items){
 		var subscribe_id = feed.subscribe_id;
