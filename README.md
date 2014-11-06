@@ -16,6 +16,11 @@
 * 上記の仕様のためキーカスタマイズや挙動の変更、機能追加、widgets追加などは直接ソースコードを修正追加する必要がある
 
 
+### 既知の不具合
+
+* 初回起動時など設定が保存されていない状態では正常に動作しないので、認証後は設定画面から設定保存をおこない一度ウィンドウを閉じて開き直せば正常に動く
+
+
 ### Thanks
 * [fastladder](https://github.com/fastladder/fastladder)
 * [livedoor Reader](http://reader.livedoor.com/reader/)
