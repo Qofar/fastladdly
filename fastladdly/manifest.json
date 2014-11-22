@@ -4,7 +4,7 @@
          "local_path": "web/init.html"
       }
    },
-   "content_security_policy": "script-src 'self' 'unsafe-eval' https://feedly.com https://cloud.feedly.com https://sandbox.feedly.com; object-src 'self'",
+   "content_security_policy": "script-src 'self' 'unsafe-eval' https://feedly.com https://cloud.feedly.com https://sandbox.feedly.com; object-src 'self'; frame-src 'self' http://live.nicovideo.jp;",
    "homepage_url": "https://feedly.com/",
    "manifest_version": 2,
    "name": "fastladdly",
