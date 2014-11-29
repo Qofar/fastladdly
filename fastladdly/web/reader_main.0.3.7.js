@@ -363,7 +363,7 @@ function setup_hook(){
 	// revert pins
 	register_hook('AFTER_CONFIGLOAD', function(){
 		if(!Config.use_pinsaver) return;
-		var url = feedly.BASE+"/streams/contents?streamId=" + encodeURIComponent("user/"+feedly.id+"/tag/global.saved") + "&count=1000&unreadOnly=true&ranked=oldest";
+		var url = feedly.BASE+"/streams/contents?streamId=" + encodeURIComponent("user/"+feedly.id+"/tag/global.saved") + "&count=1000&unreadOnly=true&ranked=newest";
 		var api = new API(url);
 		api.get({}, function(pins){
 			pins = feedly.pin2fastladder(pins);
@@ -1243,7 +1243,7 @@ Pinsaver.extend({
 	},
 	clear: function(){
 		// var api = new API("/api/pin/clear");
-		var url = feedly.BASE+"/streams/contents?streamId=" + encodeURIComponent("user/"+feedly.id+"/tag/global.saved") + "&count=10000&unreadOnly=true&ranked=oldest";
+		var url = feedly.BASE+"/streams/contents?streamId=" + encodeURIComponent("user/"+feedly.id+"/tag/global.saved") + "&count=1000&unreadOnly=true&ranked=newest";
 		var api = new API(url);
 		api.get({}, function(pins){
 			var items = pins.items;
@@ -2177,7 +2177,7 @@ function prefetch(sid,count){
 		var api = new API(api_url);
 		api.get({}, store_cache);
 	} else {
-		var api_url = feedly.BASE+"/streams/contents?streamId=" + encodeURIComponent(sid) + "&count=10000&unreadOnly=true&ranked=newest";
+		var api_url = feedly.BASE+"/streams/contents?streamId=" + encodeURIComponent(sid) + "&count=1000&unreadOnly=true&ranked=newest";
 		var api = new API(api_url);
 		api.get({}, store_cache);
 	}
@@ -3629,7 +3629,7 @@ LDR_VARS.LockTimeout = 10000;
 function get_unread(id,callback){
 	State.viewrange.start = 0;
 	State.has_next = true;
-	var api_url = feedly.BASE+"/streams/contents?streamId=" + encodeURIComponent(id) + "&count=10000&unreadOnly=true&ranked=newest";
+	var api_url = feedly.BASE+"/streams/contents?streamId=" + encodeURIComponent(id) + "&count=1000&unreadOnly=true&ranked=newest";
 	function has_cache(){
 		var cached_data = get_unread.cache.get(id);
 		if(cached_data == "prefetch"){
