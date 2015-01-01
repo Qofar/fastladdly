@@ -120,8 +120,9 @@ var feedly = {
 		xhr.send();
 	},
 	subscriptions2fastladder: function(json) {
-		var tmp = [];
-		for (var i = 0, length = json.length; i < length; i++) {
+		var length = json.length;
+		var tmp = new Array(length);
+		for (var i = 0; i < length; i++) {
 			var item = json[i];
 			var id = item.id.replace(/&amp;/ig,"&"); // feedlyは&amp;を&で格納している？
 			var link = item.website || "";
@@ -157,14 +158,15 @@ var feedly = {
 				feedlink: id.replace(/^feed\//i,""),
 				velocity: item.velocity,
 			};
-			tmp.push(sub);
+			tmp[i] = sub;
 		}
 		return tmp;
 	},
 	pin2fastladder: function(json) {
 		var items = json.items;
-		var pins = [];
-		for (var i = 0, length = items.length; i < length; i++) {
+		var length = items.length;
+		var pins = new Array(length);
+		for (var i = 0; i < length; i++) {
 			var item = items[i];
 			var pin = {
 				link  : item.alternate[0].href,
@@ -172,7 +174,7 @@ var feedly = {
 				created_on: item.actionTimestamp,
 				id: item.id
 			};
-			pins.push(pin);
+			pins[i] = pin;
 		}
 		return pins;
 	},
@@ -212,8 +214,8 @@ var feedly = {
 				velocity: sub.velocity,
 			}
 		};
-		var items = [];
 		var length = json.items.length;
+		var items = new Array(length);
 		for (var i = 0; i < length; i++) {
 			var item = json.items[i];
 			var alternateUrl = item.alternate ? item.alternate[0].href : null;
@@ -240,7 +242,7 @@ var feedly = {
 				engagement: item.engagement,   // like
 				crawled: item.crawled,
 			};
-			items.push(feed);
+			items[i] = feed;
 		}
 
 		// 既読処理用feedid
@@ -250,9 +252,10 @@ var feedly = {
 		return tmp;
 	},
 	discover2fastladder: function(json) {
-		var tmp = [];
+		var length = list.length;
+		var tmp = new Array(length);
 		var list = json.results;
-		for (var i = 0, length = list.length; i < length; i++) {
+		for (var i = 0; i < length; i++) {
 			var item = list[i];
 			var subscription = {
 				link: item.website,
@@ -261,7 +264,7 @@ var feedly = {
 				feedlink: item.feedId.replace(/^feed\//i,""),
 				feedid: item.feedId,
 			};
-			tmp.push(subscription);
+			tmp[i] = subscription;
 		}
 		return tmp;
 	},
@@ -269,13 +272,15 @@ var feedly = {
 		var tmp = {};
 		var name2id = {};
 		var id2name = {};
-		var names = [];
-		for (var i = 0, length = json.length; i < length; i++) {
+
+		var length = json.length;
+		var names =  new Array(length);
+		for (var i = 0; i < length; i++) {
 			var category = json[i];
 			if (feedly.label2rate(category.label) !== null) continue;
 			name2id[category.label] = category.id;
 			id2name[category.id] = category.label;
-			names.push(category.label);
+			names[i] = category.label;
 		}
 		names.sort();
 
