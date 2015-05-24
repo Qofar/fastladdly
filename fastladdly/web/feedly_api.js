@@ -96,7 +96,7 @@ var feedly = {
 
 		var url = feedly.BASE+"/profile";
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", url, false);
+		xhr.open("GET", url, true);
 		xhr.setRequestHeader(
 			"Authorization", "OAuth " + feedly.access_token
 		);
