@@ -9,10 +9,10 @@ function setup_widgets(){
 		return 'posted: ' + new DateTime(item.created_on).toString();
 	});
 
-	entry_widgets.add('modified_on', function(feed, item){
-		if(item.created_on == item.modified_on) return;
-		return 'modified: ' + new DateTime(item.modified_on).toString();
-	});
+	// entry_widgets.add('modified_on', function(feed, item){
+	// 	if(item.created_on == item.modified_on) return;
+	// 	return 'modified: ' + new DateTime(item.modified_on).toString();
+	// });
 
 	entry_widgets.add('crawled_on', function(feed, item){
 		return 'crawled: ' + new DateTime(item.crawled).toString();
