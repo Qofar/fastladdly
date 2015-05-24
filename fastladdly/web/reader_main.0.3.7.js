@@ -851,7 +851,7 @@ function setup_event(){
 		var el = this;
 		var url = this.href;
 		var fm = $("discover_form");
-		fm.url.value = url;
+		fm.q.value = url;
 		fm.submit();
 		Control.show_subscribe_form();
 	});
