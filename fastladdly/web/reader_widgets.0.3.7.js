@@ -64,7 +64,7 @@ function setup_widgets(){
 	});
 
 	channel_widgets.add('about', function(feed, items){
-		return '<a href="/about/'+feed.channel.feedlink+'" style="background-image:url(img/icon/about.gif);background-position:0 0;background-repeat:no-repeat;padding:0 0 4px 20px;">about feed</a>';
+		return '<a href="https://feedly.com/i/spotlight/'+feed.channel.link+'" style="background-image:url(img/icon/about.gif);background-position:0 0;background-repeat:no-repeat;padding:0 0 4px 20px;">about feed</a>';
 	});
 
 	// channel_widgets.add('touch_button', function(feed){

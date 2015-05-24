@@ -125,7 +125,7 @@ var feedly = {
 		for (var i = 0; i < length; i++) {
 			var item = json[i];
 			var id = item.id.replace(/&amp;/ig,"&"); // feedlyは&amp;を&で格納している？
-			var link = item.website || "";
+			var link = item.website || item.id.replace(/^feed\//i,"");
 
 			// categories -> rate
 			var rate = 0;
