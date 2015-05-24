@@ -19,7 +19,7 @@ function setup_widgets(){
 	});
 
 	entry_widgets.add('feedly_share', function(feed, item){
-		return item.engagement ? 'share: ' + item.engagement : "";
+		return item.engagement ? 'share: ' + item.engagement : 'share: 0';
 	});
 
 	entry_widgets.add('subs_button', function(feed, item){
