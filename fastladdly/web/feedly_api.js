@@ -252,9 +252,9 @@ var feedly = {
 		return tmp;
 	},
 	discover2fastladder: function(json) {
+		var list = json.results;
 		var length = list.length;
 		var tmp = new Array(length);
-		var list = json.results;
 		for (var i = 0; i < length; i++) {
 			var item = list[i];
 			var subscription = {
