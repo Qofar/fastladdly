@@ -744,6 +744,7 @@ Config.saveform = function(form){
 		Config[key]=value;
 	});
 	Config.save();
+	Config.load(function(){});
 };
 Config.addCallback("view_mode",function(old_value,new_value){
 	update(/mode_text.*/);
