@@ -245,7 +245,7 @@ var feedly = {
 				title: item.title,
 				category: keywords,
 				engagement: item.engagement,   // like
-				crawled: item.crawled,
+				crawled: item.recrawled || item.crawled,
 			};
 			items[i] = feed;
 		}
