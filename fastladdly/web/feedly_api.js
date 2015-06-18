@@ -50,11 +50,11 @@ var feedly = {
 		var url = feedly.BASE+"/auth/token?refresh_token="+feedly.refresh_token+
 							   "&client_id="+feedly.client_id+"&client_secret="+feedly.client_secret+"&grant_type=refresh_token";
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", url, true);
+		xhr.open("POST", url, false);
 		xhr.onload = function() {
 			if (this.status === 200) {
 				feedly.saveLocalStorage(JSON.parse(this.response));
-			} else if (this.status === 401) {
+			} else if (this.status === 400 || this.status === 401) {
 				feedly.getToken();
 			}
 		};
@@ -62,16 +62,19 @@ var feedly = {
 	},
 	saveLocalStorage: function(json) {
 		localStorage.setItem("access_token", json.access_token);
-		localStorage.setItem("refresh_token", json.refresh_token);
 		localStorage.setItem("token_type", json.token_type);
 		localStorage.setItem("feedly_id", json.id);
 		localStorage.setItem("plan", json.plan);
 
 		access_token = json.access_token;
-		refresh_token = json.refresh_token;
 		token_type = json.token_type;
 		id = json.id;
 		plan = json.plan;
+
+		if (json.refresh_token) {
+			localStorage.setItem("refresh_token", json.refresh_token);
+			refresh_token = json.refresh_token;
+		}
 	},
 	errToken: function() {
 		if (feedly.refresh_token !== null) {
@@ -95,7 +98,7 @@ var feedly = {
 
 		var url = feedly.BASE+"/profile";
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", url, true);
+		xhr.open("GET", url, false);
 		xhr.setRequestHeader(
 			"Authorization", "OAuth " + feedly.access_token
 		);
@@ -111,6 +114,9 @@ var feedly = {
 				var span = document.getElementById("welcome");
 				span.textContent = resp.email + service;
 			} else if(this.status === 401) {
+				localStorage.removeItem("access_token");
+				location.href = "init.html";
+			} else if(this.status === 403) {
 				localStorage.removeItem("access_token");
 				localStorage.removeItem("refresh_token");
 				location.href = "init.html";
