@@ -1,10 +1,15 @@
-var _Array = Array;
-var _JSON = JSON;
-
 var feedly = {
-	// BASE : "https://feedly.com/v3",
-	BASE : "https://cloud.feedly.com/v3",
+
+	// dev
 	// BASE : "https://sandbox.feedly.com/v3",
+	// client_id: "sandbox",
+	// client_secret: "A0SXFX54S3K0OC9GNCXG",
+
+	// feedly
+	BASE : "https://cloud.feedly.com/v3",
+	client_id: "feedly",
+	client_secret: "0XP4XQ07VVMDWBKUHTJM4WUQ",
+
 
 	access_token : localStorage.getItem("access_token"),
 	refresh_token : localStorage.getItem("refresh_token"),
@@ -17,9 +22,7 @@ var feedly = {
 
 
 	getToken: function() {
-		// var authUrl = feedly.BASE+"/auth/auth?client_id=sandbox&redirect_uri="+encodeURIComponent("http://localhost")+
-		// 			  "&scope=https://cloud.feedly.com/subscriptions&response_type=code";
-		var authUrl = feedly.BASE+"/auth/auth?client_id=feedly&redirect_uri="+encodeURIComponent("http://localhost")+
+		var authUrl = feedly.BASE+"/auth/auth?client_id="+feedly.client_id+"&redirect_uri="+encodeURIComponent("http://localhost")+
 					   "&scope=https://cloud.feedly.com/subscriptions&response_type=code";
 		chrome.tabs.create({ url: authUrl }, function(authTab) {
 			chrome.tabs.onUpdated.addListener(function tabOnUpdate(tabId, changeInfo, tab) {
@@ -27,12 +30,10 @@ var feedly = {
 					var regCode = /code=(.+?)(?:&|$)/i;
 					var code = regCode.exec(tab.url);
 					if (code && code.length === 2 ) {
-						// var takenUrl = feedly.BASE+"/auth/token?code="+code[1]+"&client_id=sandbox&client_secret=A0SXFX54S3K0OC9GNCXG&redirect_uri="+
-						// 			   encodeURIComponent("http://localhost")+"&grant_type=authorization_code";
-						var takenUrl = feedly.BASE+"/auth/token?code="+code[1]+"&client_id=feedly&client_secret=0XP4XQ07VVMDWBKUHTJM4WUQ&redirect_uri="+
+						var takenUrl = feedly.BASE+"/auth/token?code="+code[1]+"&client_id="+feedly.client_id+"&client_secret="+feedly.client_secret+"&redirect_uri="+
 										encodeURIComponent("http://localhost")+"&grant_type=authorization_code";
 						var xhr = new XMLHttpRequest();
-						xhr.open("POST", takenUrl, true);
+						xhr.open("POST", takenUrl, false);
 						xhr.onload = function() {
 							feedly.saveLocalStorage(JSON.parse(this.response));
 
@@ -46,10 +47,8 @@ var feedly = {
 		});
 	},
 	getFreshToken: function() {
-		// var url = feedly.BASE+"/auth/token?refresh_token="+feedly.access_token+
-		// 					  "&client_id=sandbox&client_secret=A0SXFX54S3K0OC9GNCXG&grant_type=refresh_token";
-		var url = feedly.BASE+"/auth/token?refresh_token="+feedly.access_token+
-							   "&client_id=feedly&client_secret=0XP4XQ07VVMDWBKUHTJM4WUQ&grant_type=refresh_token";
+		var url = feedly.BASE+"/auth/token?refresh_token="+feedly.refresh_token+
+							   "&client_id="+feedly.client_id+"&client_secret="+feedly.client_secret+"&grant_type=refresh_token";
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", url, true);
 		xhr.onload = function() {
