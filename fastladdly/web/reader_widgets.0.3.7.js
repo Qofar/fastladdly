@@ -76,6 +76,41 @@ function setup_widgets(){
 
 
 	// ==UserScript==
+	// @name	LDR_YouTubeThumbnails
+	// @include http://reader.livedoor.com/reader/*
+	// @version 0.1
+	// ==/UserScript==
+	(function(){
+		register_hook('before_printfeed', function(feed) {
+			if(feed.channel.link.indexOf('http://www.youtube.com/') === 0) {
+				feed.items.forEach(function(item) {
+					var id = item.link.match('v=([a-zA-Z0-9\_\-]+)&?')[1];
+					var thumurl = 'http://i.ytimg.com/vi/' + id + '/mqdefault.jpg';
+					if(item.body.indexOf(thumurl) === -1) {
+						item.body += '<img src="' + thumurl + '" />';
+					}
+				});
+			}
+		});
+	})();
+
+
+	// ==UserScript==
+	// @name	LDR_4GamerThumbnails
+	// @version 0.1
+	// ==/UserScript==
+	(function(){
+		register_hook('before_printfeed', function(feed) {
+			if(feed.channel.link.indexOf('http://www.4gamer.net') === 0) {
+				feed.items.forEach(function(item) {
+					item.body = item.body.replace(/align="\w+"/g, '');
+				});
+			}
+		});
+	})();
+
+
+	// ==UserScript==
 	// @name           LDR_ad_entry_blocker_mod.user.js
 	// @namespace      http://d.hatena.ne.jp/edvakf/
 	// @description    Remove ad items
