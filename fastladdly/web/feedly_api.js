@@ -240,7 +240,7 @@ var feedly = {
 				author: item.author || "",
 				body:  body,
 				created_on: item.published,
-				modified_on: item.recrawled ? item.crawled : item.published,
+				modified_on: item.recrawled || item.published,
 				id: item.id,
 				title: item.title,
 				category: keywords,

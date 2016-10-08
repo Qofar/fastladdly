@@ -333,7 +333,6 @@ Manage.Item = {
 
 	unsubscribe: function(){
 		var ids = TRSelector.get_selected();
-		console.log(ids);
 		var l = ids.length;
 		if(l===0) return;
 		var c = confirm( l+"Are you sure to remove "+l+" feed(s) from your subscription?");
