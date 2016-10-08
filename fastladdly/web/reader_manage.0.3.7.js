@@ -357,7 +357,6 @@ Manage.Item = {
 		var ids = TRSelector.get_selected();
 		foreach(ids,function(sid){
 			var item = subs_item(sid);
-			console.log(item);
 			if(!item) return;
 			if(item.unread_count > 0){
 				item.unread_count = 0;
