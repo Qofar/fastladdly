@@ -1,0 +1,23 @@
+{
+	"applications": {
+		"gecko": {
+			"id": "plakia@googlemail.com"
+		}
+	},
+    "browser_action": {
+        "default_icon": "web/favicon.png",
+        "default_title": "fastladder"
+    },
+    "background": { 
+        "scripts": ["background.js"]
+    },
+   "content_security_policy": "script-src 'self' 'unsafe-eval' https://feedly.com https://cloud.feedly.com; object-src 'self'; child-src 'self' http://*.nicovideo.jp https://www.youtube.com;",
+   "homepage_url": "https://feedly.com/",
+   "manifest_version": 2,
+   "name": "fastladdly",
+   "permissions": [ "tabs", "https://cloud.feedly.com/", "https://sandbox.feedly.com/" ],
+   "icons": {
+      "16": "web/favicon.png"
+   },
+   "version": "1.0.1"
+}
