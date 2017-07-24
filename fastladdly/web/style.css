@@ -481,7 +481,11 @@ a.feedlink {
     width: auto;
     height: auto;
     max-width: 700px;
-    max-height: 300px;
+    max-height: 500px;
+}
+
+.item_body center {
+    text-align: left;
 }
 
 .item_footer {

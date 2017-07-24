@@ -604,21 +604,21 @@ function loadRaw(url){
 	req.send(null);
 	return res;
 }
-function loadJson(url,callback){
-	if(dev){
-		if(!dummy[url]){return}
-		var json = dummy[url].isString ? eval("("+dummy[url]+")") : dummy[url];
-		callback(json);
-		return;
-	}
-	var req = new XMLHttpRequest;
-	req.open("GET",url,true);
-	req.onload = function(){
-		eval("var json ="+req.responseText);
-		callback(json)
-	};
-	req.send(null)
-}
+//function loadJson(url,callback){
+//	if(dev){
+//		if(!dummy[url]){return}
+//		var json = dummy[url].isString ? eval("("+dummy[url]+")") : dummy[url];
+//		callback(json);
+//		return;
+//	}
+//	var req = new XMLHttpRequest;
+//	req.open("GET",url,true);
+//	req.onload = function(){
+//		eval("var json ="+req.responseText);
+//		callback(json)
+//	};
+//	req.send(null)
+//}
 
 /*
  className
