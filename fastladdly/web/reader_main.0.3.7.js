@@ -370,7 +370,7 @@ function setup_hook(){
 			if(!pins || !pins.length){ return }
 			pins.forEach(function(v){
 				// 新しいのが上
-				pin.pins.unshift({
+				pin.pins.push({
 					url  : v.link,
 					title: v.title,
 					created_on: v.created_on,
@@ -1185,7 +1185,8 @@ Pin.extend({
 		w.document.close();
 	},
 	open: function(url,id){
-		var can_popup = (window.open(url.unescapeHTML())) ? true : false;
+		chrome.tabs.create({url:url.unescapeHTML()}, function(){});
+		var can_popup = true;
 		if(can_popup){
 			this.remove(url,id)
 		} else {
@@ -1203,7 +1204,8 @@ Pin.extend({
 		foreach(this.pins, function(p){
 			if(max_pin > count){
 				queue.push(function(){
-					can_popup = (window.open(p.url.unescapeHTML()),p.id) ? true : false;
+					can_popup = true;
+					chrome.tabs.create({url:p.url.unescapeHTML()}, function(){});
 				});
 			}
 			count++;
@@ -1606,7 +1608,7 @@ var Control = {
 	view_original: function(){
 		var item = get_active_item(true);
 		if(!item) return;
-		window.open(item.link.unescapeHTML()) || message('cannot_popup');
+		chrome.tabs.create({url:item.link.unescapeHTML()}, function(){});
 	},
 	create_folder: function(){
 		var name = create_folder();
