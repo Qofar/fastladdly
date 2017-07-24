@@ -82,10 +82,10 @@ function setup_widgets(){
 	// ==/UserScript==
 	(function(){
 		register_hook('before_printfeed', function(feed) {
-			if(feed.channel.link.indexOf('http://www.youtube.com/') === 0) {
+			if(feed.channel.link.indexOf('https://www.youtube.com/') === 0) {
 				feed.items.forEach(function(item) {
 					var id = item.link.match('v=([a-zA-Z0-9\_\-]+)&?')[1];
-					var thumurl = 'http://i.ytimg.com/vi/' + id + '/mqdefault.jpg';
+					var thumurl = 'https://i.ytimg.com/vi/' + id + '/mqdefault.jpg';
 					if(item.body.indexOf(thumurl) === -1) {
 						item.body += '<img src="' + thumurl + '" />';
 					}
