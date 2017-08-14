@@ -1,6 +1,6 @@
 # fastladdly
 
-#### フロントエンドfastladderバックエンドfeedlyなChromeApp
+#### フロントエンドfastladderバックエンドfeedlyなChromeExtension
 
 > ひととおり動くようにしたつもり、あまり触らない機能はバグありそう
 
