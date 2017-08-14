@@ -87,7 +87,7 @@ function setup_widgets(){
 					var id = item.link.match('v=([a-zA-Z0-9\_\-]+)&?')[1];
 					var thumurl = 'https://i.ytimg.com/vi/' + id + '/mqdefault.jpg';
 					if(item.body.indexOf(thumurl) === -1) {
-						item.body += '<img src="' + thumurl + '" />';
+						item.body += '<p><img src="' + thumurl + '" /></p>';
 					}
 				});
 			}
