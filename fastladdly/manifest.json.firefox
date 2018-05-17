@@ -1,9 +1,4 @@
 {
-	"applications": {
-		"gecko": {
-			"id": "plakia@googlemail.com"
-		}
-	},
     "browser_action": {
         "default_icon": "web/favicon.png",
         "default_title": "fastladder"
